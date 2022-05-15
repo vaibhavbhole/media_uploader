@@ -4,6 +4,7 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:images_picker/images_picker.dart';
+import 'package:media_uploader/trimmer_view.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 
@@ -39,13 +40,18 @@ class _VideoPickerExampleState extends State<VideoPickerExample> {
       // cropOpt: CropOption(
       //   aspectRatio: CropAspectRatio.wh16x9,
       // ),
-      maxTime: 30,
+      maxTime: 60,
     );
     print(res);
     if (res != null) {
       print("path: " + res[0].path);
+      String outputPath=await Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) {
+          return TrimmerView(File(res[0].path));
+        }),
+      );
       setState(() {
-        path = res[0].path;
+        path = outputPath;
       });
     }
 
